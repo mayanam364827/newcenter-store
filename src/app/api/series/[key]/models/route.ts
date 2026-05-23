@@ -3,11 +3,12 @@ import { prisma } from '@/lib/prisma';
 
 export async function GET(
   _req: NextRequest,
-  { params }: { params: { key: string } }
+  { params }: { params: Promise<{ key: string }> }
 ) {
+  const { key } = await params;
   try {
     const series = await prisma.series.findUnique({
-      where: { key: params.key },
+      where: { key },
     });
 
     if (!series) {
