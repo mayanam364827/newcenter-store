@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NEWCENTER.STORE — iPhone Chính Hãng</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --brand:#d70018; --brand2:#ff2d55;
+      --bg:#f5f5f7; --text:#111; --muted:#6b7280;
+      --card:#fff; --border:#e5e7eb;
+      --shadow:0 12px 36px rgba(0,0,0,.10);
+      --radius:18px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;font-family:Roboto,system-ui,-apple-system,Segoe UI,Arial,sans-serif;}
+    body{background:var(--bg);color:var(--text);}
+
+    header{
+      position:sticky; top:0; z-index:10;
+      background:linear-gradient(90deg,var(--brand),var(--brand2));
+      padding:12px 0;
+      box-shadow:0 10px 26px rgba(0,0,0,.12);
+    }
+    .container{max-width:1200px;margin:0 auto;padding:0 12px;}
+    .top{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+    .logo{font-weight:900;color:#fff;font-size:1.25rem}
+    .logo span{color:#ffe600}
+    .search{
+      flex:1; max-width:560px;
+      display:flex; gap:8px; align-items:center;
+      background:#ffffff26; border:1px solid #ffffff35;
+      border-radius:14px; padding:10px 12px;
+    }
+    .search input{width:100%;border:none;outline:none;background:transparent;color:#fff;font-weight:800}
+    .search input::placeholder{color:#fff;opacity:.85}
+    .btn{border:none;cursor:pointer;padding:10px 12px;border-radius:14px;font-weight:900}
+    .btn-ghost{background:#ffffff20;color:#fff;border:1px solid #ffffff35}
+
+    .hero{
+      background:linear-gradient(135deg,#0b1220,#1f2937);
+      color:#fff; padding:22px 0;
+    }
+    .hero .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:12px;align-items:center}
+    .hero h1{font-size:1.8rem;line-height:1.2;margin-bottom:6px}
+    .hero p{color:#e5e7eb;opacity:.95;line-height:1.55}
+    .badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+    .badge{background:#ffffff14;border:1px solid #ffffff20;padding:8px 10px;border-radius:999px;font-weight:900;font-size:.9rem}
+
+    main{padding:16px 0 70px;}
+    .layout{display:grid;grid-template-columns:280px 1fr;gap:16px;align-items:start}
+    .panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+    .hd{padding:14px;border-bottom:1px solid var(--border);font-weight:900;display:flex;justify-content:space-between;align-items:center}
+    .bd{padding:12px}
+    .muted{color:var(--muted);font-weight:700;font-size:.9rem;line-height:1.45}
+
+    .chips{display:flex;flex-wrap:wrap;gap:10px}
+    .chip{border:1px solid var(--border);background:#fff;padding:10px 12px;border-radius:999px;font-weight:900;cursor:pointer}
+    .chip.active{background:var(--brand);border-color:var(--brand);color:#fff}
+
+    .toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+    .title{font-weight:900;font-size:1.3rem}
+    .grid-products{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+
+    .card{background:#fff;border:1px solid var(--border);border-radius:22px;box-shadow:var(--shadow);overflow:hidden;transition:.15s}
+    .card:hover{transform:translateY(-3px)}
+    .thumb{background:#f3f4f6;height:210px;position:relative;overflow:hidden}
+    .thumb img{width:100%;height:100%;object-fit:cover}
+    .tag{position:absolute;left:12px;top:12px;background:var(--brand);color:#fff;font-weight:900;font-size:.78rem;padding:6px 10px;border-radius:999px}
+    .body{padding:12px}
+    .name{font-weight:900;line-height:1.25;margin-bottom:6px}
+
+    /* PRICE */
+    .price-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+    .price-sale{font-weight:900;color:var(--brand);font-size:1.15rem}
+    .price-old{font-weight:900;color:#6b7280;text-decoration:line-through}
+    .price-from{font-weight:900;color:var(--brand);font-size:1.15rem}
+
+    .actions{display:flex;gap:10px;margin-top:10px}
+    .buy{flex:1;background:var(--brand);color:#fff;font-weight:900;border:none;border-radius:14px;padding:12px;cursor:pointer}
+    .detail{background:#111827;color:#fff;font-weight:900;border:none;border-radius:14px;padding:12px;cursor:pointer;white-space:nowrap}
+
+    /* modal */
+    .modal{position:fixed;inset:0;display:none;z-index:999;background:rgba(0,0,0,.55);padding:16px}
+    .box{max-width:980px;margin:40px auto;background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,.35)}
+    .mhd{padding:14px 16px;background:linear-gradient(90deg,var(--brand),var(--brand2));color:#fff;display:flex;justify-content:space-between;align-items:center;gap:10px;font-weight:900}
+    .mclose{background:#ffffff20;border:1px solid #ffffff35;color:#fff;font-weight:900;border-radius:12px;padding:8px 10px;cursor:pointer}
+    .mbd{padding:14px 16px}
+    .mgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+    .mimg{background:#f3f4f6;border-radius:18px;overflow:hidden;height:340px}
+    .mimg img{width:100%;height:100%;object-fit:cover}
+    .select{border:1px solid var(--border);border-radius:14px;padding:10px 12px;font-weight:900;width:100%;background:#fff}
+
+    .m-price{margin:6px 0 10px}
+    .m-sale{font-weight:900;color:var(--brand);font-size:1.55rem;line-height:1.2}
+    .m-old{font-weight:900;color:#6b7280;text-decoration:line-through;margin-top:4px}
+    .m-help{color:var(--muted);font-weight:700;font-size:.92rem;line-height:1.45;margin-top:10px}
+
+    .m-actions{display:flex;gap:10px;margin-top:12px}
+    .a-buy{flex:1;background:var(--brand);color:#fff;font-weight:900;border-radius:14px;padding:12px;text-decoration:none;display:flex;align-items:center;justify-content:center}
+    .a-call{background:#111827;color:#fff;font-weight:900;border-radius:14px;padding:12px;text-decoration:none;display:flex;align-items:center;justify-content:center;white-space:nowrap}
+
+    footer{background:#0b1220;color:#fff;padding:24px 0;margin-top:20px}
+    .float{position:fixed;right:18px;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff;text-decoration:none;box-shadow:0 10px 28px rgba(0,0,0,.22);z-index:20}
+    .phone{bottom:92px;background:var(--brand)}
+    .zalo{bottom:20px;background:#0068ff}
+
+    @media(max-width:980px){
+      .hero .grid{grid-template-columns:1fr}
+      .layout{grid-template-columns:1fr}
+      .grid-products{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .mgrid{grid-template-columns:1fr}
+      .mimg{height:280px}
+    }
+    @media(max-width:560px){
+      .search{display:none}
+      .grid-products{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="container">
+    <div class="top">
+      <div class="logo">NEWCENTER.<span>STORE</span></div>
+      <div class="search"><input id="q" placeholder="Tìm iPhone (VD: 15 Pro Max)..." /></div>
+      <a class="btn btn-ghost" href="/admin.html" style="text-decoration:none;display:inline-flex;align-items:center;">Admin</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="grid">
+      <div>
+        <h1>Shop iPhone — giá theo dung lượng</h1>
+        <p>Chọn dung lượng để xem giá chính xác. Giá sale sẽ hiển thị kèm giá gốc gạch ngang.</p>
+        <div class="badges">
+          <span class="badge">Trả góp 0%</span>
+          <span class="badge">Giao nhanh</span>
+          <span class="badge">Bảo hành rõ ràng</span>
+        </div>
+      </div>
+      <div class="panel" style="background:#ffffff10;border:1px solid #ffffff18;">
+        <div class="bd">
+          <div style="font-weight:900;margin-bottom:6px;color:#fff;">Liên hệ mua hàng</div>
+          <div class="muted" style="color:#e5e7eb;">Hotline/Zalo: <b style="color:#fff;">0826 000 291</b></div>
+          <div class="muted" style="color:#e5e7eb;">Địa chỉ: 13, NE8, Thới Hòa, TP HCM</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main>
+  <div class="container">
+    <div class="layout">
+      <aside class="panel">
+        <div class="hd"><span>Danh mục iPhone</span><span class="muted" id="count"></span></div>
+        <div class="bd">
+          <div class="chips" id="chips"></div>
+        </div>
+      </aside>
+
+      <section>
+        <div class="toolbar">
+          <div>
+            <div class="title" id="viewTitle">Tất cả sản phẩm</div>
+            <div class="muted" id="viewMeta"></div>
+          </div>
+          <select class="select" id="sort" style="max-width:240px;">
+            <option value="default">Sắp xếp: Mặc định</option>
+            <option value="priceAsc">Giá tăng dần</option>
+            <option value="priceDesc">Giá giảm dần</option>
+            <option value="nameAsc">Tên A → Z</option>
+          </select>
+        </div>
+
+        <div class="grid-products" id="grid"></div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<div class="modal" id="modal">
+  <div class="box">
+    <div class="mhd">
+      <div id="mTitle">Chi tiết</div>
+      <button class="mclose" id="mClose">Đóng</button>
+    </div>
+    <div class="mbd">
+      <div class="mgrid">
+        <div class="mimg"><img id="mImg" alt=""></div>
+        <div>
+          <div class="m-price">
+            <div class="m-sale" id="mSale">Liên hệ</div>
+            <div class="m-old" id="mOld"></div>
+          </div>
+
+          <div class="muted" style="margin:8px 0 6px;font-weight:900;">Chọn dung lượng</div>
+          <select class="select" id="mStorage"></select>
+
+          <div class="m-actions">
+            <a class="a-buy" id="mBuy" href="https://zalo.me/0826000291" target="_blank">MUA NGAY</a>
+            <a class="a-call" id="mCall" href="tel:0826000291">GỌI</a>
+          </div>
+
+          <div class="m-help">Giá thay đổi theo dung lượng bạn chọn. Chat Zalo hoặc gọi để chốt đơn nhanh.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a class="float phone" href="tel:0826000291">☎</a>
+<a class="float zalo" href="https://zalo.me/0826000291" target="_blank">Z</a>
+
+<footer>
+  <div class="container" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center;">
+    <div><b style="color:#ffe600;">NEWCENTER.STORE</b> — iPhone chính hãng</div>
+    <div>13, NE8 Phường Thới Hòa, TP HCM</div>
+  </div>
+</footer>
+
+<script>
+  const API_GET = "/api/get-products.php";
+
+  let store = { products: [] };
+  let state = { series:"ALL", q:"", sort:"default" };
+  let modalState = { pid:null, storageIdx:0 };
+
+  function money(n){
+    if(!n || n <= 0) return "Liên hệ";
+    return n.toLocaleString("vi-VN") + "đ";
+  }
+
+  function escapeHtml(s){
+    return String(s ?? "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  function priceInfoOfVariant(v){
+    const price = Number(v?.price || 0);
+    const sale  = Number(v?.sale_price || 0);
+    if (sale > 0 && price > 0 && sale < price) {
+      return { show: sale, old: price, hasSale: true };
+    }
+    const show = (price > 0) ? price : sale;
+    return { show, old: 0, hasSale: false };
+  }
+
+  function bestVariant(p){
+    const vars = (p.variants||[])
+      .map(v => {
+        const info = priceInfoOfVariant(v);
+        const compare = info.show > 0 ? info.show : 1e18;
+        return { v, info, compare };
+      })
+      .sort((a,b) => a.compare - b.compare);
+
+    if(!vars.length || vars[0].compare >= 1e18) return null;
+    return vars[0];
+  }
+
+  function listSeries(){
+    return [...new Set((store.products||[]).map(p=>p.series).filter(Boolean))];
+  }
+
+  function filtered(){
+    let list = [...(store.products||[])];
+
+    if(state.series !== "ALL") list = list.filter(p => p.series === state.series);
+
+    if(state.q.trim()){
+      const q = state.q.trim().toLowerCase();
+      list = list.filter(p => (p.name||"").toLowerCase().includes(q));
+    }
+
+    if(state.sort === "priceAsc"){
+      list.sort((a,b) => ((bestVariant(a)?.compare) ?? 1e18) - ((bestVariant(b)?.compare) ?? 1e18));
+    } else if(state.sort === "priceDesc"){
+      list.sort((a,b) => ((bestVariant(b)?.compare) ?? -1) - ((bestVariant(a)?.compare) ?? -1));
+    } else if(state.sort === "nameAsc"){
+      list.sort((a,b) => (a.name||"").localeCompare((b.name||""), "vi"));
+    }
+
+    return list;
+  }
+
+  function renderChips(){
+    const chips = document.getElementById("chips");
+    const series = listSeries();
+    document.getElementById("count").textContent = series.length ? (series.length + " dòng") : "";
+
+    const all = ["ALL", ...series];
+    chips.innerHTML = all.map(s => {
+      const label = s === "ALL" ? "Tất cả" : s;
+      const active = state.series === s ? "active" : "";
+      return `<div class="chip ${active}" data-s="${escapeHtml(s)}">${label}</div>`;
+    }).join("");
+
+    chips.querySelectorAll(".chip").forEach(ch => {
+      ch.addEventListener("click", ()=>{
+        state.series = ch.dataset.s;
+        render();
+      });
+    });
+  }
+
+  function renderGrid(){
+    const grid = document.getElementById("grid");
+    const list = filtered();
+
+    document.getElementById("viewTitle").textContent = state.series === "ALL" ? "Tất cả sản phẩm" : state.series;
+    document.getElementById("viewMeta").textContent = `${list.length} sản phẩm`;
+
+    if(!list.length){
+      grid.innerHTML = `<div class="panel" style="padding:14px;border-radius:18px;">
+        <b>Không có sản phẩm.</b>
+        <div class="muted" style="margin-top:6px;">Hãy đổi danh mục hoặc từ khóa.</div>
+      </div>`;
+      return;
+    }
+
+    grid.innerHTML = list.map(p => {
+      const img = p.thumb || p.gallery?.[0] || "";
+      const best = bestVariant(p);
+
+      let priceHtml = `<div class="price-row"><div class="price-from">Liên hệ</div></div>`;
+      if (best && best.info.show > 0) {
+        if (best.info.hasSale) {
+          priceHtml = `
+            <div class="price-row">
+              <div class="price-sale">${money(best.info.show)}</div>
+              <div class="price-old">${money(best.info.old)}</div>
+            </div>
+          `;
+        } else {
+          priceHtml = `
+            <div class="price-row">
+              <div class="price-from">${money(best.info.show)}</div>
+            </div>
+          `;
+        }
+      }
+
+      return `
+        <div class="card">
+          <div class="thumb">
+            ${p.hot ? `<div class="tag">HOT</div>` : ``}
+            ${img ? `<img src="${img}" alt="${escapeHtml(p.name||"")}">` : ``}
+          </div>
+          <div class="body">
+            <div class="name">${escapeHtml(p.name||"")}</div>
+            ${priceHtml}
+            <div class="actions">
+              <button class="buy" data-buy="${escapeHtml(p.id)}">MUA NGAY</button>
+              <button class="detail" data-detail="${escapeHtml(p.id)}">Chi tiết</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join("");
+
+    grid.querySelectorAll("[data-buy]").forEach(btn=>{
+      btn.addEventListener("click", ()=>window.open("https://zalo.me/0826000291", "_blank"));
+    });
+
+    grid.querySelectorAll("[data-detail]").forEach(btn=>{
+      btn.addEventListener("click", ()=>openModal(btn.dataset.detail));
+    });
+  }
+
+  function render(){
+    renderChips();
+    renderGrid();
+  }
+
+  function openModal(pid){
+    const p = store.products.find(x=>x.id===pid);
+    if(!p) return;
+
+    modalState = { pid, storageIdx: 0 };
+
+    document.getElementById("mTitle").textContent = p.name || "Chi tiết";
+    document.getElementById("mImg").src = (p.thumb || p.gallery?.[0] || "");
+
+    const sel = document.getElementById("mStorage");
+    sel.innerHTML = (p.variants||[]).map((v, idx) => {
+      const info = priceInfoOfVariant(v);
+      const labelPrice = info.show > 0 ? money(info.show) : "Liên hệ";
+      return `<option value="${idx}">${escapeHtml(v.storage||"")} — ${labelPrice}</option>`;
+    }).join("");
+
+    sel.onchange = () => {
+      modalState.storageIdx = Number(sel.value);
+      renderModalPrice(p);
+    };
+
+    renderModalPrice(p);
+    document.getElementById("modal").style.display = "block";
+  }
+
+  function renderModalPrice(p){
+    const v = (p.variants||[])[modalState.storageIdx];
+    const info = priceInfoOfVariant(v);
+
+    const elSale = document.getElementById("mSale");
+    const elOld  = document.getElementById("mOld");
+
+    if (info.show > 0) {
+      elSale.textContent = money(info.show);
+      if (info.hasSale && info.old > 0) {
+        elOld.textContent = money(info.old);
+        elOld.style.display = "block";
+      } else {
+        elOld.textContent = "";
+        elOld.style.display = "none";
+      }
+    } else {
+      elSale.textContent = "Liên hệ";
+      elOld.textContent = "";
+      elOld.style.display = "none";
+    }
+  }
+
+  function closeModal(){ document.getElementById("modal").style.display = "none"; }
+
+  async function init(){
+    const res = await fetch(API_GET);
+    store = await res.json();
+    if(!store.products) store.products = [];
+
+    render();
+
+    document.getElementById("q").addEventListener("input", (e)=>{
+      state.q = e.target.value || "";
+      renderGrid();
+    });
+
+    document.getElementById("sort").addEventListener("change", (e)=>{
+      state.sort = e.target.value;
+      renderGrid();
+    });
+
+    document.getElementById("mClose").addEventListener("click", closeModal);
+    document.getElementById("modal").addEventListener("click", (e)=>{
+      if(e.target.id === "modal") closeModal();
+    });
+  }
+
+  init();
+</script>
+</body>
+</html>
